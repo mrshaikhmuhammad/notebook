@@ -1,0 +1,40 @@
+package ai;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.*;
+
+public class Summarize {
+    private final static String URL = "InputUrl";
+    private final static String TOKEN = "InputToken";
+
+    // xyz     -->     {"input":"xyz"}
+    private static String inputJson(String input){
+        return String.format("{\"inputs\": \"%s\"}", input.replace("\"", "\\\""));
+    }
+
+    // {"result":"xyz"}    -->     xyz
+    private static String outputJSON(String input){ 
+        int start = input.indexOf(":") + 2;
+        int end = input.lastIndexOf("\"");
+        return input.substring(start, end);
+    }
+
+    public static String summarize(String input) throws IOException, InterruptedException{
+        //Create HTTP Request 
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL))
+                .header("Authorization", "Bearer " + TOKEN)
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(inputJson(input)))
+                .build();
+
+        //Recieve HTTP Responce
+        HttpClient client = HttpClient.newHttpClient();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        String output = response.body();
+
+        //Return Output
+        return outputJSON(output);
+    }
+}
