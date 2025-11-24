@@ -9,12 +9,12 @@ public class Summarize {
     private final static String TOKEN = "InputToken";
 
     // xyz     -->     {"input":"xyz"}
-    private static String inputJson(String input){
+    private static String toJson(String input){
         return String.format("{\"inputs\": \"%s\"}", input.replace("\"", "\\\""));
     }
 
     // {"result":"xyz"}    -->     xyz
-    private static String outputJSON(String input){ 
+    private static String fromJson(String input){ 
         int start = input.indexOf(":") + 2;
         int end = input.lastIndexOf("\"");
         return input.substring(start, end);
@@ -26,7 +26,7 @@ public class Summarize {
                 .uri(URI.create(URL))
                 .header("Authorization", "Bearer " + TOKEN)
                 .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(inputJson(input)))
+                .POST(HttpRequest.BodyPublishers.ofString(toJson(input)))
                 .build();
 
         //Recieve HTTP Responce
@@ -35,6 +35,6 @@ public class Summarize {
         String output = response.body();
 
         //Return Output
-        return outputJSON(output);
+        return fromJson(output);
     }
 }
