@@ -10,7 +10,7 @@ public class Note extends MetaNote{
 
     public Note(String text) throws Exception{
         this.text = text;
-        this.summary = Summarize.summarize(text);
+        // this.summary = Summarize.summarize(text);
     }
 
     public String getTitle(){
