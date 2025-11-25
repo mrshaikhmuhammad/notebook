@@ -8,5 +8,11 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"java.project.referencedLibraries": [
+			"lib/**/*.jar",
+			"src/lib/gson-2.10.1.jar",
+			"src/store/gson-2.10.1.jar"
+		]
+	}
 }
