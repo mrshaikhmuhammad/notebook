@@ -6,6 +6,8 @@ import gui.Notepad;
 
 public class Main {
     public static void main(String[] args) {
+        // list = gson
+
         Notepad notepad = new Notepad();
         JScrollPane scrollPane = notepad.component();
         Frame screen = new Frame("Type Scribe", "./src/logo/LogoBlack.png", scrollPane);

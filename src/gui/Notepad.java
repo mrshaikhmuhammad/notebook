@@ -1,25 +1,20 @@
 package gui;
 
-import javax.swing.*;
-import javax.swing.undo.CannotRedoException;
-import javax.swing.undo.CannotUndoException;
-import javax.swing.undo.UndoManager;
-
-import com.google.gson.Gson;
-
-import note.Note;
-
+import java.util.*;
+import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.FileWriter;
-
-import javax.swing.text.*;
+import javax.swing.*;
 import javax.swing.undo.*;
+import javax.swing.text.*;
 
+import note.Note;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class Notepad {
     private final static String JSON_ADDRESS = "src/store/Notes.json";
-    
+    private static ArrayList<Note> notes = new ArrayList<Note>();
     private JTextArea textArea(){
 
         JTextArea textArea = new JTextArea();
@@ -53,10 +48,24 @@ public class Notepad {
                     else if(event.isControlDown() && event.getKeyCode() == KeyEvent.VK_S){
                         
                         Note note = new Note(textArea.getText());
-                        FileWriter writer = new FileWriter(JSON_ADDRESS);
+                        
                         Gson gson = new Gson();
 
-                        gson.toJson(note, writer);
+                        File file  = new File(JSON_ADDRESS);
+
+                        if(file.exists()){
+                            FileReader reader = new FileReader(file);
+                            notes = gson.fromJson(reader, new TypeToken<ArrayList<Note>>(){}.getType());
+
+                            reader.close();
+                        }
+
+                        notes.add(note);
+
+                        FileWriter writer = new FileWriter(file);
+                       
+
+                        gson.toJson(notes, writer);
                         writer.close();
                     }
                 } catch(CannotRedoException | CannotUndoException cantException){
