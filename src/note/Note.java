@@ -9,7 +9,10 @@ public class Note extends MetaNote{
         // this.summary = Summarize.summarize(text);
     }
 
-    public String getTitle(){
-        return title;
+    public String getDate(){
+        return date;
+    }
+    public void setText(String text){
+        this.text = text;
     }
 }

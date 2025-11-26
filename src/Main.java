@@ -1,37 +1,14 @@
 import javax.swing.*;
-
 import gui.components.Frame;
 import gui.Notepad;
 
-
 public class Main {
+    private static final String TITLE = "Type Scribe";
+    private static final String ICON_ADDRESS = "./src/logo/LogoBlack.png";
     public static void main(String[] args) {
-        // list = gson
-
         Notepad notepad = new Notepad();
         JScrollPane scrollPane = notepad.component();
-        Frame screen = new Frame("Type Scribe", "./src/logo/LogoBlack.png", scrollPane);
+        Frame screen = new Frame(TITLE, ICON_ADDRESS, scrollPane);
         screen.start();        
     }
 }
-
-
- /*
-    Main(){
-        AVL tree = new AVL();
-        tree = gson(file, AVL);
-
-        Frame screen = new Frame("Type Scribe");
-        SaveManager save = new SaveManager(tree);
-        Notepad notepad = new Notepad(SaveManager);
-        
-        screen.add(notepad);
-
-        gson.toJson(tree, file);
-    }
- 
- 
- 
- 
- */
-
