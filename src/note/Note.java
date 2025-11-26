@@ -1,9 +1,5 @@
 package note;
 
-import java.time.LocalDate;
-import javax.swing.JOptionPane;
-import ai.Summarize;
-
 public class Note extends MetaNote{
     private String text;
     private String summary;
