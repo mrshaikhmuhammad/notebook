@@ -3,8 +3,8 @@ package note;
 import java.util.TreeMap;
 
 public class NoteCollection {
-    private static int counter;
-    private static TreeMap<Integer, Note> tree;
+    private int counter;
+    private TreeMap<Integer, Note> tree;
 
     public NoteCollection(){
         counter = 0;
