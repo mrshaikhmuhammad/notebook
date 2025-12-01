@@ -10,11 +10,12 @@ import note.Note;
 import store.SaveManager;
 
 public class Notepad {
-    private static SaveManager saveManager = new SaveManager();
+    private static SaveManager saveManager;
     private UndoManager undoManager = new UndoManager();
     private Note note;
 
-    public Notepad(){
+    public Notepad(SaveManager saveManager){
+        Notepad.saveManager = saveManager;
         try {
             note = new Note("");
         } catch (Exception e) {
