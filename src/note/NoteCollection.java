@@ -3,22 +3,20 @@ package note;
 import java.util.TreeMap;
 
 public class NoteCollection {
-    private int counter;
-    private TreeMap<Integer, Note> tree;
+    private TreeMap<String, Note> tree;
 
     public NoteCollection(){
-        counter = 0;
         tree = new TreeMap<>();
     }
 
     public void insert(Note note){
         // if already exist then update
-        if(note.getId() == -1){
+        if(note.getDate() == null){
             note.setTitle();
-            note.setId(++counter);
+            note.setDate();
         }
 
         // otherwize update it
-        tree.put(note.getId(), note);
+        tree.put(note.getDate(), note);
     }
 }
