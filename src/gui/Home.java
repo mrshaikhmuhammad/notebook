@@ -16,10 +16,9 @@ public class Home {
 
         }
 
-        // create a single SaveManager for the app
+
         final SaveManager saveManager = new SaveManager();
 
-        // Ensure Swing GUI is created on the Event Dispatch Thread
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Home");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
