@@ -22,9 +22,9 @@ public class Notepad {
             System.out.println(e.getLocalizedMessage());
         }
     }
-    
+
     private JTextArea textArea(){
-        
+
         JTextArea textArea = new JTextArea();
         textArea.setRows(99);
         textArea.setColumns(70);
@@ -33,11 +33,10 @@ public class Notepad {
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.addKeyListener(this.keyManager(textArea));
-        
         return textArea;
     }
 
-    private KeyAdapter keyManager(JTextArea textArea){   
+    private KeyAdapter keyManager(JTextArea textArea){
 
         Document doc = textArea.getDocument();
         doc.addUndoableEditListener(undoManager);
