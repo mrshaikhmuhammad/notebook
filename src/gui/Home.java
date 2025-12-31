@@ -1,23 +1,20 @@
 package gui;
 import store.SaveManager;
-
 import javax.swing.*;
-
+import gui.components.Frame;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Home {
+    private static final String TITLE = "Type Scribe";
+    private static final String ICON_ADDRESS = "./src/logo/LogoBlack.png";
     public static void main(String[] args) {
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-
+            System.err.println("Error setting look and feel: " + e.getMessage());
         }
 
-
-        final SaveManager saveManager = new SaveManager();
 
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Home");
@@ -56,20 +53,13 @@ public class Home {
             addNew.setOpaque(true);
             addNew.setBorderPainted(false);
 
-            addNew.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // create Notepad UI and open it in a separate window so the user sees it
-                    Notepad notepad = new Notepad(saveManager);
-                    JScrollPane notePane = notepad.component();
-
-                    JFrame noteFrame = new JFrame("New Note");
-                    noteFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    noteFrame.setSize(800, 600);
-                    noteFrame.setLocationRelativeTo(frame);
-                    noteFrame.setContentPane(notePane);
-                    noteFrame.setVisible(true);
-                }
+            addNew.addActionListener(e -> {
+                // create Notepad UI and open it in a separate window so the user sees it
+                SaveManager saveManager = new SaveManager();
+                Notepad notepad = new Notepad(saveManager);
+                JScrollPane scrollPane = notepad.component();
+                Frame screen = new Frame(TITLE, ICON_ADDRESS, scrollPane);
+                screen.start();
             });
 
             mainPanel.add(new JLabel("Your Notes"), BorderLayout.NORTH);

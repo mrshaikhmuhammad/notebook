@@ -56,6 +56,7 @@ public class Notepad {
                         saveManager.save(note);
                     }
                 } catch(CannotRedoException | CannotUndoException cantException){
+                    System.err.println("Undo/Redo operation failed: " + cantException.getMessage());
                 } catch (Exception exception){
                     System.out.println(exception.getMessage());
                 }
