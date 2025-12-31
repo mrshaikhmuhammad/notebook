@@ -2,12 +2,12 @@ package note;
 
 import java.time.*;
 import javax.swing.JOptionPane;
-
+import java.util.Map;
 public class MetaNote {
     protected String title;
     protected String date;
 
-    public MetaNote(){
+    public MetaNote() {
         title = null;
         date = null;
     }
@@ -15,13 +15,21 @@ public class MetaNote {
     public String getDate() {
         return date;
     }
+
     public void setDate() {
         this.date = LocalDateTime.now().toString();
     }
-    public String getTitle(){
+
+    public String getTitle() {
         return title;
     }
-    public void setTitle(){
+
+    public void setTitle() {
         this.title = JOptionPane.showInputDialog("Enter File Name Here: ");
     }
+
+    public String toString() {
+        return "Title: " + title + "\nDate: " + date;
+    }
 }
+
