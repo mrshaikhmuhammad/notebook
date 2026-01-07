@@ -74,11 +74,58 @@ public class Home {
             // Add New Note button
             JButton addNew = getJButton();
 
-            mainPanel.add(new JLabel("Your Notes"), BorderLayout.NORTH);
+
+            JButton deleteButton = new JButton("🗑 Delete Note");
+            deleteButton.setForeground(Color.red);
+            deleteButton.setOpaque(true);
+            deleteButton.setBorderPainted(false);
+//        deleteButton.setPreferredSize(new Dimension(0,30));
+//            deleteButton.setMargin(new Insets(2, 5, 2, 5));
+            deleteButton.addActionListener(_ -> {
+                Note selected = leftList.getSelectedValue();
+                if (selected != null) {
+                int confirm = JOptionPane.showConfirmDialog(frame, "Are you sure you want to delete this note?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    collection.getAll().remove(selected.getDate());}
+                //Updating JSON:
+                    SaveManager saveManager = new SaveManager();
+                    saveManager.saveAll(collection);
+                //Updating UI:
+                    listModel.removeElement(selected);
+                    centerArea.setText("");
+                }else {
+                    JOptionPane.showMessageDialog(frame, "No note selected to delete.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            });
+
+
+
+
+            // Top panel with label and buttons
+            // --- Top panel with label and Delete button ---
+            JPanel topPanel = new JPanel(new BorderLayout(5, 5));
+            JLabel titleLabel = new JLabel("Your Notes");
+            titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+            topPanel.add(titleLabel, BorderLayout.WEST);
+
+// Delete button on the right
+            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+            buttonPanel.add(deleteButton);
+            topPanel.add(buttonPanel, BorderLayout.EAST);
+
+// Add top panel to main panel
+            mainPanel.add(topPanel, BorderLayout.NORTH);
+
+// Add New button
             mainPanel.add(addNew, BorderLayout.SOUTH);
 
             frame.setContentPane(mainPanel);
             frame.setVisible(true);
+
+
+
+
         });
     }
 
