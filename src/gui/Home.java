@@ -1,20 +1,21 @@
 package gui;
+
+import note.*;
 import store.SaveManager;
-import javax.swing.*;
 import gui.components.Frame;
+import javax.swing.*;
 import java.awt.*;
 
 public class Home {
     private static final String TITLE = "Type Scribe";
     private static final String ICON_ADDRESS = "./src/logo/LogoBlack.png";
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             System.err.println("Error setting look and feel: " + e.getMessage());
         }
-
 
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Home");
@@ -22,51 +23,82 @@ public class Home {
             frame.setSize(700, 400);
             frame.setLocationRelativeTo(null);
 
-
             JPanel mainPanel = new JPanel(new BorderLayout(8, 8));
             mainPanel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
-            // Content for the scroll panel (left)
-            DefaultListModel<String> listModel = new DefaultListModel<>();
-            for (int i = 1; i <= 40; i++) {
-                listModel.addElement("note " + i);
+
+
+            // Load all notes
+            NoteCollection collection = NoteCollection.load();
+            DefaultListModel<Note> listModel = new DefaultListModel<>();
+
+
+            for (Note note : collection.getAll().values()) {
+                listModel.addElement(note);
             }
-            JList<String> leftList = new JList<>(listModel);
+
+            // JList for notes
+            JList<Note> leftList = new JList<>(listModel);
             leftList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-            // Put the list inside a JScrollPane
+            // Cell renderer to show title + date
+            leftList.setCellRenderer(new DefaultListCellRenderer() {
+                @Override
+                public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                                                              boolean isSelected, boolean cellHasFocus) {
+                    JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                    Note note = (Note) value;
+                    label.setText(" • "+(note.getTitle() == null ? "(Untitled)" : note.getTitle()) );
+                    return label;
+                }
+            });
+
             JScrollPane leftScrollPane = new JScrollPane(leftList);
             leftScrollPane.setPreferredSize(new Dimension(200, 0));
-            // Add scroll pane to the WEST (left) of the BorderLayout
             mainPanel.add(leftScrollPane, BorderLayout.WEST);
 
-            // Center content so layout is visible
-            JTextArea centerArea = new JTextArea("to be done: ~a button to add notes ~list of notes on the left ~clicking a note opens it in notepad");
+            // Center text area
+            JTextArea centerArea = new JTextArea();
             centerArea.setLineWrap(true);
             centerArea.setWrapStyleWord(true);
             mainPanel.add(new JScrollPane(centerArea), BorderLayout.CENTER);
 
-
-            JButton addNew = new JButton("+ Add New Note");
-            addNew.setBackground(Color.black);
-            addNew.setForeground(Color.white);
-            addNew.setOpaque(true);
-            addNew.setBorderPainted(false);
-
-            addNew.addActionListener(e -> {
-                // create Notepad UI and open it in a separate window so the user sees it
-                SaveManager saveManager = new SaveManager();
-                Notepad notepad = new Notepad(saveManager);
-                JScrollPane scrollPane = notepad.component();
-                Frame screen = new Frame(TITLE, ICON_ADDRESS, scrollPane);
-                screen.start();
+            // Show note text when selected
+            leftList.addListSelectionListener(_ -> {
+                Note selected = leftList.getSelectedValue();
+                if (selected != null) {
+                    centerArea.setText(selected.getText());
+                }
             });
+
+            // Add New Note button
+            JButton addNew = getJButton();
 
             mainPanel.add(new JLabel("Your Notes"), BorderLayout.NORTH);
             mainPanel.add(addNew, BorderLayout.SOUTH);
 
-
             frame.setContentPane(mainPanel);
-            frame.setVisible(true);});
+            frame.setVisible(true);
+        });
     }
+
+    private static JButton getJButton() {
+        JButton addNew = new JButton("+ Add New Note");
+        addNew.setBackground(Color.black);
+        addNew.setForeground(Color.white);
+        addNew.setOpaque(true);
+        addNew.setBorderPainted(false);
+
+        addNew.addActionListener(_ -> {
+
+
+            // open Notepad UI
+            SaveManager saveManager = new SaveManager();
+            Notepad notepad = new Notepad(saveManager);
+            JScrollPane scrollPane = notepad.component();
+            Frame screen = new Frame(TITLE, ICON_ADDRESS, scrollPane);
+            screen.start();
+        });
+        return addNew;
     }
+}

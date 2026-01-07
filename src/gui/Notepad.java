@@ -22,6 +22,10 @@ public class Notepad {
             System.out.println(e.getLocalizedMessage());
         }
     }
+    public Notepad(SaveManager saveManager, Note note) {
+        Notepad.saveManager = saveManager;
+        this.note = note;  // use existing note
+    }
 
     private JTextArea textArea(){
 

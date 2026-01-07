@@ -1,5 +1,7 @@
 package note;
 
+import java.time.LocalDateTime;
+
 public class Note extends MetaNote{
     private String text;
     private String summary;
@@ -9,10 +11,19 @@ public class Note extends MetaNote{
         // this.summary = Summarize.summarize(text);
     }
 
-    public String getDate(){
-        return date;
+    public Note() {
+        this.text = "";
+        this.summary = "";
+        if (this.date == null) {
+            this.date = LocalDateTime.now().toString();
+        }
     }
-    public void setText(String text){
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
         this.text = text;
     }
 }
