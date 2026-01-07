@@ -5,8 +5,8 @@ import java.net.URI;
 import java.net.http.*;
 
 public class Summarize {
-    private final static String URL = "InputUrl";
-    private final static String TOKEN = "InputToken";
+    private final static String URL = "https://huggingface.co/facebook/bart-large-cnn";
+    private final static String TOKEN = "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";
 
     // xyz     -->     {"input":"xyz"}
     private static String toJson(String input){
