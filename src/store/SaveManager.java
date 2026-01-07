@@ -33,14 +33,13 @@ public class SaveManager {
     }
 
 //saveAll notes in collection after deleting or modifying:
-    public void saveAll(NoteCollection collection){
-        notes = collection;
-        try (FileWriter writer = new FileWriter(JSON_ADDRESS);) {
-            Gson gson = new Gson();
-            gson.toJson(notes, writer);
-        } catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
-        }
+public void saveAll(NoteCollection collection){
+    try (FileWriter writer = new FileWriter(JSON_ADDRESS)) {
+        Gson gson = new Gson();
+        gson.toJson(collection, writer);
+    } catch (Exception e){
+        System.err.println("Error saving notes: " + e.getMessage());
     }
+}
 
 }

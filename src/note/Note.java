@@ -26,4 +26,12 @@ public class Note extends MetaNote{
     public void setText(String text) {
         this.text = text;
     }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 }

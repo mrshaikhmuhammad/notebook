@@ -18,7 +18,7 @@ public class Home {
         }
 
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Home");
+            JFrame frame = new JFrame(TITLE);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(700, 400);
             frame.setLocationRelativeTo(null);
@@ -76,11 +76,11 @@ public class Home {
 
 
             JButton deleteButton = new JButton("🗑 Delete Note");
-            deleteButton.setForeground(Color.red);
+            deleteButton.setBackground(Color.black);
+            deleteButton.setForeground(Color.white);
             deleteButton.setOpaque(true);
             deleteButton.setBorderPainted(false);
-//        deleteButton.setPreferredSize(new Dimension(0,30));
-//            deleteButton.setMargin(new Insets(2, 5, 2, 5));
+
             deleteButton.addActionListener(_ -> {
                 Note selected = leftList.getSelectedValue();
                 if (selected != null) {
@@ -99,7 +99,47 @@ public class Home {
 
             });
 
+    JButton summaryButton = new JButton("📝 Summarize");
+            summaryButton.setBackground(Color.black);
+            summaryButton.setForeground(Color.white);
+            summaryButton.setOpaque(true);
+            summaryButton.setBorderPainted(false);
+            summaryButton.setPreferredSize(new Dimension(110,25));
 
+            summaryButton.addActionListener(_ -> {
+                Note selected = leftList.getSelectedValue();
+                if (selected != null) {
+                    try {
+                        String text = selected.getText();
+                        String summary = ai.Summarize.summarize(text);
+
+                        // Update the note object
+                        selected.setSummary(summary);
+
+                        // Update JSON file permanently
+                        SaveManager saveManager = new SaveManager();
+                        saveManager.saveAll(collection);
+
+
+                        // Show summary in a dialog
+                        JTextArea summaryArea = new JTextArea(summary);
+                        summaryArea.setLineWrap(true);
+                        summaryArea.setWrapStyleWord(true);
+                        summaryArea.setEditable(false);
+                        summaryArea.setFont(new Font("Arial", Font.PLAIN, 14));
+                        JScrollPane scrollPane = new JScrollPane(summaryArea);
+                        scrollPane.setPreferredSize(new Dimension(400, 300));
+
+                        JOptionPane.showMessageDialog(frame, scrollPane, "Summary", JOptionPane.INFORMATION_MESSAGE);
+
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(frame, "Error generating summary:\n" + e.getMessage(),
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(frame, "No note selected to summarize.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            });
 
 
             // Top panel with label and buttons
@@ -110,9 +150,12 @@ public class Home {
             topPanel.add(titleLabel, BorderLayout.WEST);
 
 // Delete button on the right
+            // Top panel button panel (right side)
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+            buttonPanel.add(summaryButton);
             buttonPanel.add(deleteButton);
             topPanel.add(buttonPanel, BorderLayout.EAST);
+
 
 // Add top panel to main panel
             mainPanel.add(topPanel, BorderLayout.NORTH);
