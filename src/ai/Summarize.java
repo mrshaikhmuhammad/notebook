@@ -5,8 +5,8 @@ import java.net.URI;
 import java.net.http.*;
 
 public class Summarize {
-    private final static String URL = "https://huggingface.co/facebook/bart-large-cnn";
-    private final static String TOKEN = "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";
+    private final static String URL = "https://router.huggingface.co/hf-inference/models/facebook/bart-large-cnn";
+    private final static String TOKEN = "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";
 
     // xyz     -->     {"input":"xyz"}
     private static String toJson(String input){
