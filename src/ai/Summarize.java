@@ -6,7 +6,7 @@ import java.net.http.*;
 
 public class Summarize {
     private final static String URL = "https://router.huggingface.co/hf-inference/models/facebook/bart-large-cnn";
-    private final static String TOKEN = "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";
+    private final static String TOKEN = "";
 
     // xyz     -->     {"input":"xyz"}
     private static String toJson(String input){
