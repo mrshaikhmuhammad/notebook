@@ -70,3 +70,19 @@ git clone https://github.com/mrshaikhmuhammad/notebook.git
 
 ## 📄 License
 This project is open source and available under the MIT License.
+
+---
+
+## Contributors
+
+<p align="left">
+  <a href="https://github.com/mrshaikhmuhammad" target="_blank">
+    <img src="assets/av-muhammad.svg" width="64" height="64" alt="mrshaikhmuhammad"/>
+  </a>
+  <a href="https://github.com/shahzebalipirzada" target="_blank">
+    <img src="assets/av-shahzeb.svg" width="64" height="64" alt="shahzebalipirzada"/>
+  </a>
+  <a href="https://github.com/mahmarani" target="_blank">
+    <img src="assets/av-mahmarani.svg" width="64" height="64" alt="mahmarani"/>
+  </a>
+</p>
