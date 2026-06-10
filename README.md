@@ -83,6 +83,6 @@ This project is open source and available under the MIT License.
     <img src="assets/av-shahzeb.svg" width="64" height="64" alt="shahzebalipirzada"/>
   </a>
   <a href="https://github.com/mahmarani" target="_blank">
-    <img src="assets/av-mahmarani.svg" width="64" height="64" alt="mahmarani"/>
+    <img src="assets/av-mahma.svg" width="64" height="64" alt="mahmarani"/>
   </a>
 </p>
